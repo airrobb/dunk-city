@@ -1,4 +1,5 @@
 import Server from 'socket.io'
+import { joinRoom, signIn, message } from './action-creators'
 
 export default function startServer(store) {
   const io = new Server().attach(8090)
@@ -6,8 +7,9 @@ export default function startServer(store) {
     () => io.emit('state', store.getState().toJS())
   )
   io.on('connection', (socket) => {
-    console.log(socket.room)
-    socket.emit('state', store.getState().toJS())
-    socket.on('action', store.dispatch.bind(store))
+
+    socket.on('action', (data) => {
+      store.dispatch(data)
+    })
   })
 }
