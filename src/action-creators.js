@@ -19,3 +19,9 @@ export function joinRoom (data) {
     room: data.room
   }
 }
+export function disconnect (id) {
+  return {
+    type: 'DISCONNECT',
+    id: id
+  }
+}
